@@ -4,17 +4,15 @@
 
 package frc.robot;
 
-import frc.robot.commands.Limelight1mCommand;
-import frc.robot.commands.LimelightCentrerCommand;
 import frc.robot.commands.OctocanumDrivetrainCommand;
 import frc.robot.subsystems.DriveTrainSwitch;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Limelight;
+
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -25,18 +23,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-private Limelight limelight;  
+  
 private Drivetrain drivetrain;
 private DriveTrainSwitch driveTrainSwitch;
 private XboxController xboxController;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    limelight = new Limelight();
+
     drivetrain = new Drivetrain();
     driveTrainSwitch = new DriveTrainSwitch();
     xboxController = new XboxController(0);
-    drivetrain.setDefaultCommand(new OctocanumDrivetrainCommand(xboxController, driveTrainSwitch, drivetrain, limelight));
+    drivetrain.setDefaultCommand(new OctocanumDrivetrainCommand(xboxController, driveTrainSwitch, drivetrain));
     configureBindings();
   }
 
@@ -50,8 +48,6 @@ private XboxController xboxController;
    * joysticks}.
    */
   private void configureBindings() {
-    new JoystickButton(xboxController, Button.kX.value).onTrue(new Limelight1mCommand(drivetrain,limelight, xboxController));
-    new JoystickButton(xboxController, Button.kY.value).onTrue(new LimelightCentrerCommand(drivetrain,limelight, xboxController));
    
  }
 

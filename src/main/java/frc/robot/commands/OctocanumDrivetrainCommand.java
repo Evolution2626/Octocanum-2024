@@ -5,25 +5,23 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSwitch;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Limelight;
+
 
 public class OctocanumDrivetrainCommand extends CommandBase {
   private XboxController xboxController;
   private DriveTrainSwitch driveTrainSwitch;
   private Drivetrain drivetrain;
   private boolean isTankdrive;
-  Limelight limelight;
   /** Creates a new PistonOctocanum. */
-  public OctocanumDrivetrainCommand(XboxController xboxController, DriveTrainSwitch driveTrainSwitch, Drivetrain drivetrain, Limelight limelight) {
+  public OctocanumDrivetrainCommand(XboxController xboxController, DriveTrainSwitch driveTrainSwitch, Drivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.xboxController = xboxController;
     this.driveTrainSwitch = driveTrainSwitch;
     this.drivetrain = drivetrain;
-    this.limelight = limelight;
+
     addRequirements(drivetrain);
   }
 
@@ -49,16 +47,7 @@ public class OctocanumDrivetrainCommand extends CommandBase {
     else{
       drivetrain.driveCartesian(xboxController.getLeftY(), -xboxController.getLeftX(), -xboxController.getRightX());
     }
-    double[] robotPosition = limelight.getRobotPosition();
-    if(robotPosition!=null&&robotPosition.length>=6 )
-    {
-    SmartDashboard.putNumber("xPosition", robotPosition[0]);
-    SmartDashboard.putNumber("yPosition", robotPosition[1]);
-    SmartDashboard.putNumber("zPosition", robotPosition[2]);
-    SmartDashboard.putNumber("xRotation", robotPosition[3]);
-    SmartDashboard.putNumber("yRotation", robotPosition[4]);
-    SmartDashboard.putNumber("zRotation", robotPosition[5]);
-    }
+   
   }
 
   // Called once the command ends or is interrupted.
