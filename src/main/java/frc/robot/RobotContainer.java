@@ -4,10 +4,15 @@
 
 package frc.robot;
 
+import frc.robot.commands.LanceurCommand;
 import frc.robot.commands.OctocanumDrivetrainCommand;
+import frc.robot.commands.TourelleCommand;
+import frc.robot.commands.TourelleLimeLightCommand;
 import frc.robot.subsystems.DriveTrainSwitch;
 import frc.robot.subsystems.Drivetrain;
-
+import frc.robot.subsystems.Lanceur;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Tourelle;
 import edu.wpi.first.wpilibj.XboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,16 +31,25 @@ public class RobotContainer {
   
 private Drivetrain drivetrain;
 private DriveTrainSwitch driveTrainSwitch;
-private XboxController xboxController;
+private XboxController xboxController = new XboxController(0);
+private Tourelle tourelle;
+private Lanceur lanceur;
+private Limelight limelight;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    limelight = new Limelight();
+    tourelle = new Tourelle();
+    lanceur = new Lanceur();
+    tourelle.setDefaultCommand(new TourelleLimeLightCommand(tourelle, limelight, xboxController));
+    lanceur.setDefaultCommand(new LanceurCommand(xboxController, lanceur));
 
     drivetrain = new Drivetrain();
     driveTrainSwitch = new DriveTrainSwitch();
     xboxController = new XboxController(0);
     drivetrain.setDefaultCommand(new OctocanumDrivetrainCommand(xboxController, driveTrainSwitch, drivetrain));
     configureBindings();
+
   }
 
   /**

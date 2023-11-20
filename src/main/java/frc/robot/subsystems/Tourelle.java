@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,8 +20,17 @@ public class Tourelle extends SubsystemBase {
   public Tourelle() {
 
     tourner = new TalonSRX(deviceNumber.DeviceNumberTourner);
-     
+
+    tourner.setInverted(true);
+
   }
+
+  public void controle(double vitesse_tourner){
+
+    tourner.set(TalonSRXControlMode.PercentOutput, vitesse_tourner);
+}
+
+
 
   @Override
   public void periodic() {

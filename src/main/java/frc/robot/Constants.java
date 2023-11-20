@@ -21,6 +21,8 @@ public final class Constants {
     public final int DeviceNumberArriereGauche = 3;
 
     public final int DeviceNumberTourner = 0; // a changer
+    public final int DeviceNumberMoteur1 = 0; // a changer
+    public final int DeviceNumberMoteur2 = 0; // a changer
 
     public static final int kDriverControllerPort = 0;
 
