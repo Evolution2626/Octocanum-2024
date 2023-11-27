@@ -238,7 +238,7 @@ public class Limelight extends SubsystemBase {
   }
 
   /**
-   * Returns current Pipeling of the Lime Light
+   * Returns current Pipeline of the Lime Light
    * @return Pipelinge
    */
   public Integer getPipelineInt(){
