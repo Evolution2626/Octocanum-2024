@@ -16,6 +16,7 @@ public class LanceurCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.xboxController = xboxController;
     this.lanceur = lanceur;
+    addRequirements(lanceur);
   }
 
   // Called when the command is initially scheduled.

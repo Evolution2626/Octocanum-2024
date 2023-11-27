@@ -17,6 +17,7 @@ public class TourelleCommand extends CommandBase {
     this.xboxController = xboxController;
     this.tourelle = tourelle;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(tourelle);
   }
 
   // Called when the command is initially scheduled.

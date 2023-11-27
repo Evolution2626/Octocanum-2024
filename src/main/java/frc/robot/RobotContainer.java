@@ -42,7 +42,7 @@ private Limelight limelight;
     lanceur = new Lanceur();
     tourelle.setDefaultCommand(new TourelleLimeLightCommand(tourelle, limelight, xboxController));
     lanceur.setDefaultCommand(new LanceurCommand(xboxController, lanceur));
-
+    limelight.setDefaultCommand(new TourelleLimeLightCommand(tourelle, limelight, xboxController));
     drivetrain = new Drivetrain();
     driveTrainSwitch = new DriveTrainSwitch();
     xboxController = new XboxController(0);

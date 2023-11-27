@@ -19,13 +19,17 @@ public TourelleLimeLightCommand(Tourelle tourelle, Limelight limelight, XboxCont
       // The controller that the command will use
       new PIDController(0.5, 0, 0),
       // This should return the measurement
+<<<<<<< Updated upstream
       () -> limelight.getRobotPosition()[1],//TODO change for the right tracking target
+=======
+      () -> limelight.getdegRotationToTarget(),//TODO change for the right tracking target (1 instead of 2)
+>>>>>>> Stashed changes
       // This should return the setpoint (can also be a constant)
-      () -> -3,
+      () -> 0,
       // This uses the output
       output -> {
         // Use the output here
-        
+        System.out.print("output");
         if(controller.getLeftBumperPressed()){
           tourelle.controle(output);
         }
