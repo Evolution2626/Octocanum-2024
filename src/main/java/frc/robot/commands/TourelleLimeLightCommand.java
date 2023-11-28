@@ -26,7 +26,7 @@ public TourelleLimeLightCommand(Tourelle tourelle, Limelight limelight, XboxCont
       // This uses the output
       output -> {
         // Use the output here
-        SmartDashboard.putNumber("output", limelight.getdegRotationToTarget());
+        SmartDashboard.putNumber("Limelight output", limelight.getdegRotationToTarget());
        // System.out.print("output");
         if(controller.getLeftBumperPressed()){
          // tourelle.controle(output);
