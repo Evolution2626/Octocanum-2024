@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Tourelle;
@@ -19,19 +20,16 @@ public TourelleLimeLightCommand(Tourelle tourelle, Limelight limelight, XboxCont
       // The controller that the command will use
       new PIDController(0.5, 0, 0),
       // This should return the measurement
-<<<<<<< Updated upstream
-      () -> limelight.getRobotPosition()[1],//TODO change for the right tracking target
-=======
-      () -> limelight.getdegRotationToTarget(),//TODO change for the right tracking target (1 instead of 2)
->>>>>>> Stashed changes
+      () -> limelight.getdegRotationToTarget(),
       // This should return the setpoint (can also be a constant)
       () -> 0,
       // This uses the output
       output -> {
         // Use the output here
-        System.out.print("output");
+        SmartDashboard.putNumber("output", limelight.getdegRotationToTarget());
+       // System.out.print("output");
         if(controller.getLeftBumperPressed()){
-          tourelle.controle(output);
+         // tourelle.controle(output);
         }
         
       });
