@@ -11,34 +11,26 @@ import frc.robot.Constants.PCM;
 
 public class DriveTrainSwitch extends SubsystemBase {
   PCM pcm = new PCM();
-  private DoubleSolenoid avantgauche;
-  private DoubleSolenoid avantdroit;
-  private DoubleSolenoid arrieregauche;
-  private DoubleSolenoid arrieredroit;
+  private DoubleSolenoid piston;
+
 
 
   /** Creates a new DriveTrainSwitch. */
   public DriveTrainSwitch() {
 
-    avantgauche = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, pcm.PISTON_FRONT_LEFT_FORWARD, pcm.PISTON_FRONT_LEFT_REVERSE);
-    avantdroit = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, pcm.PISTON_FRONT_RIGHT_FORWARD, pcm.PISTON_FRONT_RIGHT_REVERSE);
-    arrieredroit = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, pcm.PISTON_BACK_RIGHT_FORWARD, pcm.PISTON_BACK_RIGHT_REVERSE);
-    arrieregauche = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, pcm.PISTON_BACK_LEFT_FORWARD, pcm.PISTON_BACK_LEFT_REVERSE);
+    piston = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, pcm.PISTON_FORWARD, pcm.PISTON_REVERSE);
+    
   }
 
-  public void ActivateOctocanum() {
-    avantgauche.set(DoubleSolenoid.Value.kForward);
-    avantdroit.set(DoubleSolenoid.Value.kForward);
-    arrieredroit.set(DoubleSolenoid.Value.kForward);
-    arrieregauche.set(DoubleSolenoid.Value.kForward);
+  public void ActivateDrivetank() {
+    piston.set(DoubleSolenoid.Value.kReverse);
+    
 
   }
 
   public void ActivateMecanum() {
-    avantgauche.set(DoubleSolenoid.Value.kReverse);
-    avantdroit.set(DoubleSolenoid.Value.kReverse);
-    arrieredroit.set(DoubleSolenoid.Value.kReverse);
-    arrieregauche.set(DoubleSolenoid.Value.kReverse);
+    piston.set(DoubleSolenoid.Value.kForward);
+
 
   }
 

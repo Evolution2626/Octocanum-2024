@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    compressor = new Compressor(8, PneumaticsModuleType.CTREPCM);
+    compressor = new Compressor(1, PneumaticsModuleType.CTREPCM);
   }
 
   /**
@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    compressor.enableAnalog(60, 120);
+    compressor.enableDigital();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

@@ -3,22 +3,23 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
 
 public class Drivetrain extends SubsystemBase {
   OperatorConstants deviceNumber = new OperatorConstants();
 
-  private TalonSRX avantgauche;
-  private TalonSRX avantdroit;
-  private TalonSRX arrieregauche;
-  private TalonSRX arrieredroit;
-
+  private Spark avantgauche;
+  private Spark avantdroit;
+  private Spark arrieregauche;
+  private Spark arrieredroit;
+  public boolean isTankDrive;
 
 
 
@@ -27,33 +28,46 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
 
 
-    avantgauche = new TalonSRX(deviceNumber.DeviceNumberAvantGauche);
-    avantdroit = new TalonSRX(deviceNumber.DeviceNumberAvantDroit);
-    arrieredroit = new TalonSRX(deviceNumber.DeviceNumberArriereDroit);
-    arrieregauche = new TalonSRX(deviceNumber.DeviceNumberArriereGauche);
+    avantgauche = new Spark(deviceNumber.DeviceNumberAvantGauche);
+    avantdroit = new Spark(deviceNumber.DeviceNumberAvantDroit);
+    arrieredroit = new Spark(deviceNumber.DeviceNumberArriereDroit);
+    arrieregauche = new Spark(deviceNumber.DeviceNumberArriereGauche);
 
     avantdroit.setInverted(true);
     avantgauche.setInverted(false);
     arrieredroit.setInverted(true);
-    arrieregauche.setInverted(false);
+    arrieregauche.setInverted(true);
     
 
+  }
+
+  public void setDriveMode(boolean isTankDrive){
+    this.isTankDrive = isTankDrive;
+  }
+
+  public void drive(double rightX, double rightY, double leftX, double leftY){
+    if(isTankDrive == true){
+      driveTank(Math.pow(rightY, 3) * 0.75, Math.pow(leftY, 3) * 0.75);
+      SmartDashboard.putString("Mode","drivetank");
+    }else{
+      driveCartesian(Math.pow(leftY, 3) * 0.75, -Math.pow(leftX, 3) * 0.75, -Math.pow(rightX, 3) * 0.75);
+      SmartDashboard.putString("Mode", "mecanum");
+    }
   }
   public void  driveCartesian(double xSpeed, double ySpeed, double rotation) {
 
     WheelSpeeds wheelSpeed = MecanumDrive.driveCartesianIK(xSpeed, ySpeed, rotation);
-    avantdroit.set(TalonSRXControlMode.PercentOutput, wheelSpeed.frontRight);
-    avantgauche.set(TalonSRXControlMode.PercentOutput, wheelSpeed.frontLeft);
-    arrieregauche.set(TalonSRXControlMode.PercentOutput, wheelSpeed.rearLeft);
-    arrieredroit.set(TalonSRXControlMode.PercentOutput, wheelSpeed.rearRight);
+    avantdroit.set(wheelSpeed.frontRight);
+    avantgauche.set(wheelSpeed.frontLeft);
+    arrieregauche.set(wheelSpeed.rearLeft);
+    arrieredroit.set(wheelSpeed.rearRight);
   }
+
   public void driveTank(double joystickDroit, double joystickGauche){
-    avantdroit.set(TalonSRXControlMode.PercentOutput, joystickDroit);
-    avantgauche.set(TalonSRXControlMode.PercentOutput, joystickGauche);
-    arrieregauche.set(TalonSRXControlMode.PercentOutput, joystickGauche);
-    arrieredroit.set(TalonSRXControlMode.PercentOutput, joystickDroit);
-
-
+    avantdroit.set(joystickDroit);
+    avantgauche.set(joystickGauche);
+    arrieregauche.set(joystickGauche);
+    arrieredroit.set(joystickDroit);
   }
 
 
