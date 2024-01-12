@@ -5,12 +5,16 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
+
 
 public class Drivetrain extends SubsystemBase {
   OperatorConstants deviceNumber = new OperatorConstants();
@@ -20,12 +24,15 @@ public class Drivetrain extends SubsystemBase {
   private Spark arrieregauche;
   private Spark arrieredroit;
   public boolean isTankDrive;
+  private ADXRS450_Gyro gyro;
+  private MecanumDrive m_robotDrive;
 
 
 
 
   /** Creates a new TankDrivetrain. */
   public Drivetrain() {
+    gyro = new ADXRS450_Gyro(Port.kOnboardCS0);
 
 
     avantgauche = new Spark(deviceNumber.DeviceNumberAvantGauche);
@@ -37,9 +44,18 @@ public class Drivetrain extends SubsystemBase {
     avantgauche.setInverted(false);
     arrieredroit.setInverted(true);
     arrieregauche.setInverted(true);
+    m_robotDrive = new MecanumDrive(avantgauche, arrieregauche, avantdroit, arrieredroit);
     
 
   }
+  public double getGyroAngle(){
+    return gyro.getAngle();
+  }
+
+  public void resetGyroAngle(){
+    gyro.reset();
+  }
+
 
   public void setDriveMode(boolean isTankDrive){
     this.isTankDrive = isTankDrive;
@@ -48,20 +64,15 @@ public class Drivetrain extends SubsystemBase {
   public void drive(double rightX, double rightY, double leftX, double leftY){
     if(isTankDrive == true){
       driveTank(Math.pow(rightY, 3) * 0.75, Math.pow(leftY, 3) * 0.75);
-      SmartDashboard.putString("Mode","drivetank");
     }else{
-      driveCartesian(Math.pow(leftY, 3) * 0.75, -Math.pow(leftX, 3) * 0.75, -Math.pow(rightX, 3) * 0.75);
-      SmartDashboard.putString("Mode", "mecanum");
+      driveCartesianGyro(rightX, leftX, rightY, leftY);
     }
   }
-  public void  driveCartesian(double xSpeed, double ySpeed, double rotation) {
-
-    WheelSpeeds wheelSpeed = MecanumDrive.driveCartesianIK(xSpeed, ySpeed, rotation);
-    avantdroit.set(wheelSpeed.frontRight);
-    avantgauche.set(wheelSpeed.frontLeft);
-    arrieregauche.set(wheelSpeed.rearLeft);
-    arrieredroit.set(wheelSpeed.rearRight);
+  public void  driveCartesianGyro(double rightX, double leftX, double rightY, double leftY) {
+    
+    m_robotDrive.driveCartesian(leftY, -leftX, -rightX, gyro.getRotation2d());
   }
+  
 
   public void driveTank(double joystickDroit, double joystickGauche){
     avantdroit.set(joystickDroit);
@@ -73,6 +84,12 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // This method will be called once per scheduler 
+    SmartDashboard.putNumber("Gyro", gyro.getAngle());
+    if(isTankDrive == true){
+      SmartDashboard.putString("Mode","drivetank");
+    }else{
+      SmartDashboard.putString("Mode", "mecanum");
+    }
   }
 }

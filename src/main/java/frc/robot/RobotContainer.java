@@ -8,7 +8,7 @@ package frc.robot;
 import frc.robot.commands.ActivateDrivetrainCommand;
 import frc.robot.commands.ActivateMecanumCommand;
 import frc.robot.commands.OctocanumDrivetrainCommand;
-
+import frc.robot.commands.ResetGryoCommand;
 import frc.robot.subsystems.DriveTrainSwitch;
 import frc.robot.subsystems.Drivetrain;
 
@@ -57,6 +57,7 @@ private CommandXboxController xboxController = new CommandXboxController(0);
 
     xboxController.a().onTrue(new ActivateDrivetrainCommand(driveTrainSwitch, drivetrain));
     xboxController.b().onTrue(new ActivateMecanumCommand(driveTrainSwitch, drivetrain));
+    xboxController.x().onTrue(new ResetGryoCommand(drivetrain));
 
  }
 
