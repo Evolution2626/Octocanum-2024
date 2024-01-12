@@ -49,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
 
   }
   public double getGyroAngle(){
-    return gyro.getAngle();
+    return Math.abs(gyro.getAngle());
   }
 
   public void resetGyroAngle(){
@@ -69,8 +69,11 @@ public class Drivetrain extends SubsystemBase {
     }
   }
   public void  driveCartesianGyro(double rightX, double leftX, double rightY, double leftY) {
-    
-    m_robotDrive.driveCartesian(leftY, -leftX, -rightX, gyro.getRotation2d());
+    if(getGyroAngle() >= 45 && getGyroAngle() <= 135 || getGyroAngle() >= 225 && getGyroAngle() <= 315){
+      m_robotDrive.driveCartesian(-leftY, leftX, -rightX, gyro.getRotation2d());
+    }else{
+      m_robotDrive.driveCartesian(leftY, -leftX, -rightX, gyro.getRotation2d());
+    }
   }
   
 
@@ -90,6 +93,10 @@ public class Drivetrain extends SubsystemBase {
       SmartDashboard.putString("Mode","drivetank");
     }else{
       SmartDashboard.putString("Mode", "mecanum");
+    }
+
+    if(getGyroAngle() >= 360){
+      resetGyroAngle();
     }
   }
 }
