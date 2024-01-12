@@ -65,10 +65,10 @@ public class Drivetrain extends SubsystemBase {
     if(isTankDrive == true){
       driveTank(Math.pow(rightY, 3) * 0.75, Math.pow(leftY, 3) * 0.75);
     }else{
-      driveCartesianGyro(rightX, leftX, rightY, leftY);
+      driveCartesianGyro(rightX * 0.5, leftX * 0.75, leftY * 0.75);
     }
   }
-  public void  driveCartesianGyro(double rightX, double leftX, double rightY, double leftY) {
+  public void  driveCartesianGyro(double rightX, double leftX, double leftY) {
     if(getGyroAngle() >= 45 && getGyroAngle() <= 135 || getGyroAngle() >= 225 && getGyroAngle() <= 315){
       m_robotDrive.driveCartesian(-leftY, leftX, -rightX, gyro.getRotation2d());
     }else{
