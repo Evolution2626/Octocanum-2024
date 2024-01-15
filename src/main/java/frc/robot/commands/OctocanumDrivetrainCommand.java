@@ -33,8 +33,8 @@ public class OctocanumDrivetrainCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        drivetrain.drive(xboxController.getRightX(), xboxController.getRightY(), xboxController.getLeftX(), xboxController.getLeftY());
-    
+      drivetrain.drive(xboxController.getRightX(), xboxController.getRightY(), xboxController.getLeftX(), xboxController.getLeftY(), xboxController.getRightTriggerAxis(), xboxController.getLeftTriggerAxis());
+      
     
    
   }
