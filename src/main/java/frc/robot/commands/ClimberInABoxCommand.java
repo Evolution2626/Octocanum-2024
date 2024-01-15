@@ -4,25 +4,20 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.DriveTrainSwitch;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.ClimberInAnBox;
 
-
-public class OctocanumDrivetrainCommand extends CommandBase {
+public class ClimberInABoxCommand extends CommandBase {
+  private ClimberInAnBox climberInAnBox;
   private CommandXboxController xboxController;
-  private DriveTrainSwitch driveTrainSwitch;
-  private Drivetrain drivetrain;
- 
-  /** Creates a new PistonOctocanum. */
-  public OctocanumDrivetrainCommand(CommandXboxController xboxController, DriveTrainSwitch driveTrainSwitch, Drivetrain drivetrain) {
+  /** Creates a new ClimberInABoxCommand. */
+  public ClimberInABoxCommand(ClimberInAnBox climberInAbox, CommandXboxController xboxController) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.climberInAnBox = climberInAbox;
     this.xboxController = xboxController;
-    this.driveTrainSwitch = driveTrainSwitch;
-    this.drivetrain = drivetrain;
-
-    addRequirements(drivetrain);
+    addRequirements(climberInAbox);
   }
 
   // Called when the command is initially scheduled.
@@ -32,10 +27,7 @@ public class OctocanumDrivetrainCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      drivetrain.drive(xboxController.getRightX(), xboxController.getRightY(), xboxController.getLeftX(), xboxController.getLeftY(), xboxController.getRightTriggerAxis(), xboxController.getLeftTriggerAxis());
-      
-    
-   
+    climberInAnBox.climb(xboxController.getRightTriggerAxis());
   }
 
   // Called once the command ends or is interrupted.

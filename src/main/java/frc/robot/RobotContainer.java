@@ -7,8 +7,10 @@ package frc.robot;
 
 import frc.robot.commands.ActivateDrivetrainCommand;
 import frc.robot.commands.ActivateMecanumCommand;
+import frc.robot.commands.ClimberInABoxCommand;
 import frc.robot.commands.OctocanumDrivetrainCommand;
 import frc.robot.commands.ResetGryoCommand;
+import frc.robot.subsystems.ClimberInAnBox;
 import frc.robot.subsystems.DriveTrainSwitch;
 import frc.robot.subsystems.Drivetrain;
 
@@ -29,16 +31,21 @@ public class RobotContainer {
   
 private Drivetrain drivetrain;
 private DriveTrainSwitch driveTrainSwitch;
+private ClimberInAnBox climberInAnBox;
 private CommandXboxController xboxController = new CommandXboxController(0);
+private CommandXboxController xboxController1 = new CommandXboxController(1);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /** The container for the robot. Contains subsystems, OI
   public RobotContainer() {
     // Configure the trigger bindings
     
     drivetrain = new Drivetrain();
     driveTrainSwitch = new DriveTrainSwitch();
+    climberInAnBox = new ClimberInAnBox();
     xboxController = new CommandXboxController(0);
+    xboxController1 = new CommandXboxController(1);
     drivetrain.setDefaultCommand(new OctocanumDrivetrainCommand(xboxController, driveTrainSwitch, drivetrain));
+    climberInAnBox.setDefaultCommand(new ClimberInABoxCommand(climberInAnBox, xboxController1));
     configureBindings();
 
   }

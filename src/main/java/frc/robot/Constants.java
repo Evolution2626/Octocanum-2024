@@ -19,6 +19,9 @@ public final class Constants {
     public final int DeviceNumberAvantGauche = 0;
     public final int DeviceNumberArriereDroit = 3;
     public final int DeviceNumberArriereGauche = 9;
+
+    public final int DeviceNumberClimberDroit = 0;
+    public final int DeviceNumberClimberGauche = 0;
   }
 
   public static class PCM{

@@ -6,25 +6,24 @@ package frc.robot.subsystems;
 
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class Drivetrain extends SubsystemBase {
   OperatorConstants deviceNumber = new OperatorConstants();
 
-  private Spark avantgauche;
-  private Spark avantdroit;
-  private Spark arrieregauche;
-  private Spark arrieredroit;
+  private CANSparkMax avantgauche;
+  private CANSparkMax avantdroit;
+  private CANSparkMax arrieregauche;
+  private CANSparkMax arrieredroit;
   public boolean isTankDrive;
   private ADXRS450_Gyro gyro;
   private MecanumDrive m_robotDrive;
@@ -42,10 +41,10 @@ public class Drivetrain extends SubsystemBase {
     gyro = new ADXRS450_Gyro(Port.kOnboardCS0);
 
 
-    avantgauche = new Spark(deviceNumber.DeviceNumberAvantGauche);
-    avantdroit = new Spark(deviceNumber.DeviceNumberAvantDroit);
-    arrieredroit = new Spark(deviceNumber.DeviceNumberArriereDroit);
-    arrieregauche = new Spark(deviceNumber.DeviceNumberArriereGauche);
+    avantgauche = new CANSparkMax(deviceNumber.DeviceNumberAvantGauche, MotorType.kBrushless);
+    avantdroit = new CANSparkMax(deviceNumber.DeviceNumberAvantDroit, MotorType.kBrushless);
+    arrieredroit = new CANSparkMax(deviceNumber.DeviceNumberArriereDroit, MotorType.kBrushless);
+    arrieregauche = new CANSparkMax(deviceNumber.DeviceNumberArriereGauche, MotorType.kBrushless);
 
     avantdroit.setInverted(true);
     avantgauche.setInverted(false);
