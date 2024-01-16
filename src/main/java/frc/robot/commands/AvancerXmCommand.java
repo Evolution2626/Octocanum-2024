@@ -14,19 +14,20 @@ import frc.robot.subsystems.Drivetrain;
 
 
 public class AvancerXmCommand extends PIDCommand {
-private Drivetrain drivetrain;
+  private Drivetrain drivetrain;
+
 
 
   /** Creates a new Avancer1mCommand. */
-  public AvancerXmCommand(Drivetrain drivetrain) {
+  public AvancerXmCommand(Drivetrain drivetrain, double metre) {
     
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(1, 0, 0),
         // This should return the measurement
-        () -> 0,
+        () -> encoderValue[], // TODO erreur ici
         // This should return the setpoint (can also be a constant)
-        () -> 0,
+        () -> metre / 0.058,
         // This uses the output
         output -> {
           // Use the output here
@@ -34,6 +35,7 @@ private Drivetrain drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
 
     this.drivetrain = drivetrain;
+    double[] encoderValue = drivetrain.getEncoder();
 addRequirements(drivetrain);
     // Configure additional PID options by calling `getController` here.
   }

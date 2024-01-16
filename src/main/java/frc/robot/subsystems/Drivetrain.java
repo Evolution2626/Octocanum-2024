@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
@@ -24,13 +25,17 @@ public class Drivetrain extends SubsystemBase {
   private CANSparkMax avantdroit;
   private CANSparkMax arrieregauche;
   private CANSparkMax arrieredroit;
+  private RelativeEncoder avantGaucheEncoder;
+  private RelativeEncoder avantDroitEncoder;
+  private RelativeEncoder arriereGaucheEncoder;
+  private RelativeEncoder arriereDroitEncoder;
   public boolean isTankDrive;
   private ADXRS450_Gyro gyro;
   private MecanumDrive m_robotDrive;
   private double angleBase = 0.0;
   private boolean angleSet = false;
   private PIDController correction = new PIDController(0.1, 0.1, 0);
- 
+  
 
 
 
@@ -52,7 +57,10 @@ public class Drivetrain extends SubsystemBase {
     arrieregauche.setInverted(true);
     m_robotDrive = new MecanumDrive(avantgauche, arrieregauche, avantdroit, arrieredroit);
 
-    
+    avantGaucheEncoder = avantgauche.getEncoder();
+    avantDroitEncoder = avantdroit.getEncoder();
+    arriereDroitEncoder = arrieredroit.getEncoder();
+    arriereGaucheEncoder = arrieregauche.getEncoder();
 
   }
   public double getGyroAngle(){
@@ -64,6 +72,12 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetGyroAngle(){
     gyro.reset();
+  }
+  public double[] getEncoder(){
+    
+    double[] encoderValue = {avantDroitEncoder.getPosition(), avantGaucheEncoder.getPosition(), arriereDroitEncoder.getPosition(), arriereGaucheEncoder.getPosition()};
+    return encoderValue; 
+    
   }
 
 
