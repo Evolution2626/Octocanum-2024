@@ -10,11 +10,12 @@ import frc.robot.commands.ActivateMecanumCommand;
 import frc.robot.commands.ClimberInABoxCommand;
 import frc.robot.commands.OctocanumDrivetrainCommand;
 import frc.robot.commands.ResetGryoCommand;
+import frc.robot.commands.ShooterActivateCommand;
+import frc.robot.commands.ShooterDisactivateCommand;
 import frc.robot.subsystems.ClimberInAnBox;
 import frc.robot.subsystems.DriveTrainSwitch;
 import frc.robot.subsystems.Drivetrain;
-
-
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -32,6 +33,7 @@ public class RobotContainer {
 private Drivetrain drivetrain;
 private DriveTrainSwitch driveTrainSwitch;
 private ClimberInAnBox climberInAnBox;
+private Shooter shooter;
 private CommandXboxController xboxController = new CommandXboxController(0);
 private CommandXboxController xboxController1 = new CommandXboxController(1);
 
@@ -65,6 +67,9 @@ private CommandXboxController xboxController1 = new CommandXboxController(1);
     xboxController.a().onTrue(new ActivateDrivetrainCommand(driveTrainSwitch, drivetrain));
     xboxController.b().onTrue(new ActivateMecanumCommand(driveTrainSwitch, drivetrain));
     xboxController.x().onTrue(new ResetGryoCommand(drivetrain));
+    xboxController1.rightBumper().onTrue(new ShooterActivateCommand(shooter));
+    xboxController1.rightBumper().onFalse(new ShooterDisactivateCommand(shooter));
+
 
  }
 
